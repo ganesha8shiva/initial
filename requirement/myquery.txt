@@ -67,7 +67,9 @@ Screens
 	C) Console: 7 columns, 2 rows, filled from left to right.  
 	D) Left Mirrors take two pages to print currently (48 slots, 12 rows and 4 columns), Filled in ascending order, vertically.  
 	E) Right Mirrors - same logic as left.
-		
+	
+   Q. Do we need to generated pdf for pick sheets ? 	
+   Q. TBD (Note If researched is required from my end, hours pertaining it won't be count for bill
 
 Pick Sheet Important Information:
 	Start CSN
@@ -76,7 +78,9 @@ Pick Sheet Important Information:
 	Individual Part #s.  
 	Order of CSN will change from asc to desc depending on type of pick sheet.
 	CSNs will always be picked in chronological order.
-
-
+   
+   Q. TBD
+   
 4) Workflow - manage pick sheets as picked, shipped, etc.  
     
+   Q. TBD
