@@ -1,0 +1,67 @@
+Opid::Sequence  Requirements  (version 0001)
+============================================
+
+High Level Requirements
+-----------------------
+
+We are creating a web interface that will take imported files, and then allow the customer to download picksheets (based on imported information).  Pick Sheets once created can be marked as shipped.  
+
+Login not required, this is a simple web app with limited functionality to work when their main system is unavailable.
+
+Data Layout
+-----------
+Simple Data Layout - SQLite database is fine
+
+PartRequest - mimic imported data 1 row per imported line.  Add unique id for pk joins.
+PickSheet - Type (Fuel, Exhaust, etc), min CSN, max CSN, date printed, status - not imported, created from user interface.
+PickSheetPart - Many to Many relationship...  PickSheet.id, PartRequest.id, Part # (Contains part #, for instance column Q for FuelTank, or just get from join to PartRequest)
+
+
+Screens
+-------
+1) Import Screen
+	- Upload a file (sample_data.txt) fixed width columns into a sqlite database.  Column specifications are in sample_data.xls 
+	- Paste in textbox (same text format)
+	- [Later Requirement] check an email account for the file, and import it automatically
+
+2) Overview/Status Screen
+ 	- List all imported rows and their status
+		Add status column for (final steps coming but likely:  pending, printed, picked, shipped).   
+	- View Part Status
+		For each part type, show how many pending requests there are and if there's enough available to make a picksheet (example 9 for fuel), have a link to create a pick sheet.
+
+		A) Fuel       
+		B) Exhaust
+ 		C) Console
+		D) Left Mirror
+		E) Right Mirror	
+
+3) Print Pick Sheets
+	- Pick sheets are defined by the type of part, and are a depiction of the physicaly layout of the parts to be shipped on the rack.
+	- Current system pick sheets are shown in in sample_picksheet.pdf
+	- Rows will be grouped into a picksheet based on the part type
+	Example Pick Sheet 1:
+		FUEL Part (column Q in import file, Page 1 of sample_picksheet.pdf).  
+		Will be based off the the Fuel column of the next 9 rows (by CSN).  
+		In a 3 column x 3 row table, print the CSNs in reverse order, and the specific part number (9223, 9213, etc)
+	We will provide specific pick sheet information for each type, but basically they are all a table configuration X columns, Y rows, with Ascending or Descending order.   
+
+	A) Fuel: 3 columns, 3 rows, filled from bottom row first, right to left.
+	B) Exhaust: 1 column 8 slots, filled from top to bottom.   Both exhaust and catalytic converter are included on this pick sheet.   
+	C) Console: 7 columns, 2 rows, filled from left to right.  
+	D) Left Mirrors take two pages to print currently (48 slots, 12 rows and 4 columns), Filled in ascending order, vertically.  
+	E) Right Mirrors - same logic as left.
+		
+
+Pick Sheet Important Information:
+	Start CSN
+	End CSN
+	Rack # (automatic field, that we will use the last Rack # for that part type, or let the user type it in).
+	Individual Part #s.  
+	Order of CSN will change from asc to desc depending on type of pick sheet.
+	CSNs will always be picked in chronological order.
+
+
+4) Workflow - manage pick sheets as picked, shipped, etc.  
+    
+
